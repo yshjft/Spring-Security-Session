@@ -9,8 +9,8 @@ spring:
       ddl-auto: create
     properties:
       hibernate:
-        show_sql: true # ?? DDL, DML ????
-        format_sql: true # DB query? ? ? ??? ??
+        show_sql: true # 모든 DDL, DML 확인여부
+        format_sql: true # DB query를 좀 더 이쁘게 보기
   mvc:
     throw-exception-if-no-handler-found: true
   web:
@@ -18,9 +18,8 @@ spring:
       add-mappings: false
     locale: en
 logging.level:
-  com.springSecurity.SrpingSecurity Session: debug
-  org.hibernate.SQL: debug # SQL DML ???? ??? ? ??? ??? ?? ??? debug ??? ??
-  org.hibernate.type: trace # query ?? ?? ??? ??? ????
+  org.hibernate.SQL: debug # SQL DML 문장들이 실행될 때 그것들 모두를 로그 시키고 debug 모드로 설정
+  org.hibernate.type: trace # query ?에 어떤 값들이 있는지 알려준다
 server:
   error:
     include-stacktrace: never
