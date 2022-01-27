@@ -1,0 +1,27 @@
+spring:
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/h2-data/SecuritySession
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        show_sql: true # ?? DDL, DML ????
+        format_sql: true # DB query? ? ? ??? ??
+  mvc:
+    throw-exception-if-no-handler-found: true
+  web:
+    resources:
+      add-mappings: false
+    locale: en
+logging.level:
+  com.springSecurity.SrpingSecurity Session: debug
+  org.hibernate.SQL: debug # SQL DML ???? ??? ? ??? ??? ?? ??? debug ??? ??
+  org.hibernate.type: trace # query ?? ?? ??? ??? ????
+server:
+  error:
+    include-stacktrace: never
+    include-binding-errors: never
