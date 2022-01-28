@@ -35,5 +35,9 @@ public class LogInterceptor implements HandlerInterceptor {
         String method = request.getMethod();
 
         log.info("[ID: {}] RESPONSE {} {}", uuid, method, uri);
+
+        if(ex != null) {
+            log.error("[ERROR] = {}", ex.getMessage());
+        }
     }
 }

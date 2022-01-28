@@ -1,16 +1,19 @@
 spring:
   datasource:
     url: jdbc:h2:tcp://localhost/~/h2-data/SecuritySession
+    driver-class-name: org.h2.Driver
     username: sa
     password:
-    driver-class-name: org.h2.Driver
   jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     properties:
       hibernate:
         show_sql: true # 모든 DDL, DML 확인여부
         format_sql: true # DB query를 좀 더 이쁘게 보기
+    defer-datasource-initialization: true
+    open-in-view: false
   mvc:
     throw-exception-if-no-handler-found: true
   web:
