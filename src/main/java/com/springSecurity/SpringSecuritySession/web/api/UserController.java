@@ -7,6 +7,7 @@ import com.springSecurity.SpringSecuritySession.web.dto.user.UserWithAuthorities
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,7 @@ public class UserController {
     }
 
     @GetMapping("/all")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<List<UserWithAuthoritiesResDto>> getUsers() {
         List<UserWithAuthoritiesResDto> users = userService.getUsers();
         return new ResponseEntity<>(users, HttpStatus.OK);

@@ -1,6 +1,7 @@
 package com.springSecurity.SpringSecuritySession.web.exception;
 
 import com.springSecurity.SpringSecuritySession.SessionUtil;
+import com.springSecurity.SpringSecuritySession.web.exception.customException.AccessDenied;
 import com.springSecurity.SpringSecuritySession.web.exception.customException.LoginFailException;
 import com.springSecurity.SpringSecuritySession.web.exception.customException.NoUserException;
 import com.springSecurity.SpringSecuritySession.web.exception.customException.UnauthorizedException;
@@ -19,8 +20,13 @@ public class ApiControllerAdvice {
     }
 
     @ExceptionHandler(UnauthorizedException.class)
-    public ResponseEntity<String> accessDeniedException(UnauthorizedException e) {
+    public ResponseEntity<String> unAuthorizedException(UnauthorizedException e) {
         return new ResponseEntity<>("unauthorized access", HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(AccessDenied.class)
+    public ResponseEntity<String> accessDeniedException() {
+        return new ResponseEntity<>("access denied", HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(NoUserException.class)
