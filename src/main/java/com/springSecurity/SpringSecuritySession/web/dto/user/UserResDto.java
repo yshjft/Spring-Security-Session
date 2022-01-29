@@ -6,12 +6,12 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class GetUserResDto {
+public class UserResDto {
     private String email;
     private String name;
 
     @Builder
-    public GetUserResDto(String email, String name) {
+    public UserResDto(String email, String name) {
         this.email = email;
         this.name = name;
     }

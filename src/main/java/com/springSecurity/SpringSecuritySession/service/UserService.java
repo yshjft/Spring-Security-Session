@@ -5,8 +5,9 @@ import com.springSecurity.SpringSecuritySession.domain.Authority.AuthorityName;
 import com.springSecurity.SpringSecuritySession.domain.User.User;
 import com.springSecurity.SpringSecuritySession.domain.User.UserRepository;
 import com.springSecurity.SpringSecuritySession.service.auth.CustomUserDetails;
-import com.springSecurity.SpringSecuritySession.web.dto.user.GetUserResDto;
+import com.springSecurity.SpringSecuritySession.web.dto.user.UserResDto;
 import com.springSecurity.SpringSecuritySession.web.dto.user.SignUpReqDto;
+import com.springSecurity.SpringSecuritySession.web.dto.user.UserWithAuthoritiesResDto;
 import com.springSecurity.SpringSecuritySession.web.exception.customException.DuplicateUserException;
 import com.springSecurity.SpringSecuritySession.web.exception.customException.NoUserException;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -55,16 +58,32 @@ public class UserService {
     }
 
     @Transactional(readOnly = true)
-    public GetUserResDto getUser() {
+    public UserResDto getUser() {
         CustomUserDetails userDetails = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Long id = userDetails.getId();
 
         User user = userRepository.findById(id).orElseThrow(()-> new NoUserException());
 
-        return GetUserResDto.builder()
+        return UserResDto.builder()
                 .email(user.getEmail())
                 .name(user.getName())
                 .build();
     }
 
+    @Transactional(readOnly = true)
+    public List<UserWithAuthoritiesResDto> getUsers() {
+        List<UserWithAuthoritiesResDto> UserWithAuthoritiesResDtoList = userRepository.findUserWithAuthorities().stream()
+                .map(user ->
+                        UserWithAuthoritiesResDto.builder()
+                                .email(user.getEmail())
+                                .name(user.getName())
+                                .authorities(
+                                        user.getAuthorities().stream().map(authority -> authority.getAuthorityName()).collect(Collectors.toList())
+                                )
+                                .build()
+                )
+                .collect(Collectors.toList());
+
+        return UserWithAuthoritiesResDtoList;
+    }
 }
