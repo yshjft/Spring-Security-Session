@@ -5,8 +5,6 @@ import com.springSecurity.SpringSecuritySession.web.dto.auth.LoginReqDto;
 import com.springSecurity.SpringSecuritySession.web.exception.customException.LoginFailException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;

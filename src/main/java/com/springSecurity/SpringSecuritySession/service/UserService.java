@@ -4,16 +4,23 @@ import com.springSecurity.SpringSecuritySession.domain.Authority.Authority;
 import com.springSecurity.SpringSecuritySession.domain.Authority.AuthorityName;
 import com.springSecurity.SpringSecuritySession.domain.User.User;
 import com.springSecurity.SpringSecuritySession.domain.User.UserRepository;
+import com.springSecurity.SpringSecuritySession.service.auth.CustomUserDetails;
+import com.springSecurity.SpringSecuritySession.web.dto.user.GetUserResDto;
 import com.springSecurity.SpringSecuritySession.web.dto.user.SignUpReqDto;
-import com.springSecurity.SpringSecuritySession.web.exception.customException.DuplicateUser;
+import com.springSecurity.SpringSecuritySession.web.exception.customException.DuplicateUserException;
+import com.springSecurity.SpringSecuritySession.web.exception.customException.NoUserException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
+
 import java.util.HashSet;
 import java.util.Set;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class UserService {
@@ -23,7 +30,7 @@ public class UserService {
     @Transactional
     public String signUp(SignUpReqDto signUpReqDto) {
         if(userRepository.existsByEmail(signUpReqDto.getEmail())) {
-            throw new DuplicateUser("duplicate user");
+            throw new DuplicateUserException("duplicate user");
         }
 
         Set<Authority> authorities = new HashSet<>();
@@ -46,4 +53,18 @@ public class UserService {
 
         return "sign up success";
     }
+
+    @Transactional(readOnly = true)
+    public GetUserResDto getUser() {
+        CustomUserDetails userDetails = (CustomUserDetails)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long id = userDetails.getId();
+
+        User user = userRepository.findById(id).orElseThrow(()-> new NoUserException());
+
+        return GetUserResDto.builder()
+                .email(user.getEmail())
+                .name(user.getName())
+                .build();
+    }
+
 }

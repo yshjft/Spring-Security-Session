@@ -1,6 +1,7 @@
 package com.springSecurity.SpringSecuritySession.web.api;
 
 import com.springSecurity.SpringSecuritySession.service.UserService;
+import com.springSecurity.SpringSecuritySession.web.dto.user.GetUserResDto;
 import com.springSecurity.SpringSecuritySession.web.dto.user.SignUpReqDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -15,8 +16,9 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public ResponseEntity<String> test() {
-        return new ResponseEntity<>("test", HttpStatus.CREATED);
+    public ResponseEntity<GetUserResDto> getUser() {
+        GetUserResDto user = userService.getUser();
+        return new ResponseEntity<>(user, HttpStatus.OK);
     }
 
     @PostMapping("/signup")
@@ -24,4 +26,6 @@ public class UserController {
         String res = userService.signUp(signUpReqDto);
         return new ResponseEntity<>(res, HttpStatus.CREATED);
     }
+
+
 }

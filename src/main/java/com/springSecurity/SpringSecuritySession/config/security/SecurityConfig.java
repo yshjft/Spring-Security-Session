@@ -7,7 +7,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
-import org.springframework.security.web.access.AccessDeniedHandler;
 
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -26,7 +25,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/hello/**", "/api/user/signup", "/api/auth/login", "/exception/**").permitAll()
+                .antMatchers("/api/user/signup", "/api/auth/login", "/exception/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling()
