@@ -1,6 +1,6 @@
 package com.springSecurity.SpringSecuritySession.web.dto.user;
 
-import com.springSecurity.SpringSecuritySession.domain.Authority.AuthorityName;
+import com.springSecurity.SpringSecuritySession.annotation.Authorities;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,10 +23,11 @@ public class SignUpReqDto {
     @NotBlank
     private String name;
 
-    private AuthorityName[] authorities;
+    @Authorities
+    private String[] authorities;
 
     @Builder
-    public SignUpReqDto(String email, String password, String name, @NotBlank AuthorityName[] authorities) {
+    public SignUpReqDto(String email, String password, String name, String[] authorities) {
         this.email = email;
         this.password = password;
         this.name = name;

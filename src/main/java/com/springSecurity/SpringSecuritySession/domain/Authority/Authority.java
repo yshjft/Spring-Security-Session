@@ -16,7 +16,6 @@ public class Authority {
     @Enumerated(EnumType.STRING)
     private AuthorityName authorityName;
 
-    @Builder
     public Authority(AuthorityName authorityName) {
         this.authorityName = authorityName;
     }

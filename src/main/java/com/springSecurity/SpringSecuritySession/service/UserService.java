@@ -37,12 +37,17 @@ public class UserService {
         }
 
         Set<Authority> authorities = new HashSet<>();
-        for(AuthorityName authorityName : signUpReqDto.getAuthorities()) {
-            authorities.add(
-                    Authority.builder()
-                    .authorityName(authorityName)
-                    .build()
-            );
+        for(String authorityStr : signUpReqDto.getAuthorities()) {
+            switch(authorityStr) {
+                case "ROLE_USER":
+                    authorities.add(new Authority(AuthorityName.ROLE_USER));
+                    break;
+                case "ROLE_ADMIN":
+                    authorities.add(new Authority(AuthorityName.ROLE_ADMIN));
+                    break;
+                default:
+                    break;
+            }
         }
 
         User user = User.builder()
