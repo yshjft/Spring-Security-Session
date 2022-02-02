@@ -1,4 +1,12 @@
 spring:
+  redis:
+    host: localhost
+    port: 6379
+    password:
+  session:
+    store-type: redis
+    redis:
+      flush-mode: on_save
   datasource:
     url: jdbc:h2:tcp://localhost/~/h2-data/SecuritySession
     driver-class-name: org.h2.Driver
@@ -27,3 +35,6 @@ server:
   error:
     include-stacktrace: never
     include-binding-errors: never
+  servlet:
+    session:
+      timeout: 60
