@@ -27,6 +27,7 @@ public class AuthService {
 
             return "login success";
         }catch (Exception e) {
+            log.error("tlqkf error = {}", e.toString());
             throw new LoginFailException();
         }
     }

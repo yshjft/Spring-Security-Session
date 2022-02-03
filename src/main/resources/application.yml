@@ -35,6 +35,3 @@ server:
   error:
     include-stacktrace: never
     include-binding-errors: never
-  servlet:
-    session:
-      timeout: 60

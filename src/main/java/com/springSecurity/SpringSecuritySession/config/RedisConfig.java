@@ -16,6 +16,8 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 @Configuration
+// session timeout 원하는 시간 설정을 위해서는 @EnableRedisHttpSession(maxInactiveIntervalInSeconds = 원하는 시간(초 단위))
+// 따로 설정하지 않을 경우 1800s로 timeout이 설정
 @EnableRedisHttpSession
 @RequiredArgsConstructor
 public class RedisConfig {
